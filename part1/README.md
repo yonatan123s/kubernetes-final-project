@@ -50,7 +50,21 @@ kubectl expose pod messaging --port=6379 --name=messaging-service --type=Cluster
         c. Type: ClusterIp
         d. Use the right labels
 `
-kubectl ...
+apiVersion: v1
+kind: Service
+metadata:
+  name: messaging-service
+spec:
+  selector:
+    pod-name: messaging
+  ports:
+    - protocol: TCP
+      port: 6379
+      targetPort: 6379
+  type: ClusterIP
+  
+kubectl apply -f messaging-service.yaml
+
 `
 
 7. Create a deployment named hr-web-app using the image kodekloud/webapp-color with 2 replicas
@@ -66,7 +80,7 @@ kubectl run hr-web-app --image kodekloud/webapp-color --replicas=2
         b. Image: busybox
 
 `
-kubectl ...
+kubectl run --restart=Never --image=busybox static-busybox --dry-run=client -o yaml --command -- sleep 1000 > /etc/kubernetes/manifests/static-busybox.yaml
 `
 
 9. Create a POD in the finance-yourname namespace named temp-bus with the image redis:alpine
@@ -112,7 +126,22 @@ EOF
         c. Pod 'redis-storage-yourname' uses volumeMount with mountPath = /data/redis
 
 `
-kubectl ...
+kubectl apply -f - <<EOF
+apiVersion: v1
+kind: Pod
+metadata:
+  name: redis-storage-yonatan
+spec:
+  containers:
+  - image: redis:alpine
+    name: test-container
+    volumeMounts:
+    - mountPath: /data/redis
+      name: cache-volume
+  volumes:
+  - name: cache-volume
+    emptyDir: {}
+EOF
 `
 
 12. Create this pod and attached it a persistent volume called pv-1
@@ -156,8 +185,10 @@ amswer-12.yaml
         d. Task: Record the changes for the image upgrade
 
 `
-answer13.yaml
-kubectl ...
+kubectl run nginx-deploy --image nginx:1.16 --record
+kubectl rollout history deployment
+kubectl set image deployment/nginx-deploy nginx-deploy=nginx:1.17 --record
+kubectl rollout history deployment
 `
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -173,9 +204,39 @@ kubectl ...
 	Use the image: busybox:1.28 for dns lookup. 
 	Record results in /root/nginx-yourname.svc and /root/nginx-yourname.pod
 `
-kubectl or YAML file
-nginx-yourname.svc
-nginx-yourname.pod
+kubectl run --restart=Never --image nginx nginx-resolver --labels=app=nginx-resolver
+kubectl apply -f - <<EOF
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-resolver-service
+spec:
+  selector:
+    app: nginx-resolver
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+EOF
+kubectl run --restart=Never --image busybox:1.28 dns -- sleep 1000
+kubectl exec -it dns -- nslookup $(kubectl get svc nginx-resolver-service -o=jsonpath='{.spec.clusterIP}') > /root/nginx-yonatan.svc
+kubectl exec -it dns -- nslookup $(kubectl get pods nginx-resolver -o=jsonpath='{.status.podIP}') > /root/nginx-yonatan.pod
+
+
+
+nginx.pod:
+Server:    100.64.0.10
+Address 1: 100.64.0.10 kube-dns.kube-system.svc.cluster.local
+
+Name:      100.113.153.135
+Address 1: 100.113.153.135 100-113-153-135.nginx-resolver-service.default.svc.cluster.local
+
+nginx.svc:
+Server:    100.64.0.10
+Address 1: 100.64.0.10 kube-dns.kube-system.svc.cluster.local
+
+Name:      100.64.159.218
+Address 1: 100.64.159.218 nginx-resolver-service.default.svc.cluster.local
 `
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -189,7 +250,20 @@ nginx-yourname.pod
 	Create this pod on node01 and make sure that it is recreated/restarted automatically in case of a failure.
 
 `
-answer-15.yaml
+cat <<EOF > /etc/kubernetes/manifests/nginx-critical.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-critical
+spec:
+  containers:
+    - name: web
+      image: nginx
+      ports:
+        - name: web
+          containerPort: 80
+          protocol: TCP
+EOF
 `
 
 
@@ -205,6 +279,28 @@ answer-15.yaml
 
 
 `
-answer-16.yaml
+kubectl run --generator=run-pod/v1 --dry-run --image nginx multi-pod -o yaml > pod2.yaml
+kubectl run --generator=run-pod/v1 multi-pod --image busybox --env=name=beta --dry-run --command "sleep 4800" -o yaml
+
+kubectl apply -f - <<EOF
+apiVersion: v1
+kind: Pod
+metadata:
+  name: multi-pod
+spec:
+  containers:
+  - image: nginx
+    imagePullPolicy: IfNotPresent
+    name: alpha
+    env:
+      - name: name
+        value: alpha
+  - image: busybox
+    name: beta
+    command: ["sleep", "4800"]
+    env:
+      - name: name
+        value: beta
+EOF
 `
 
