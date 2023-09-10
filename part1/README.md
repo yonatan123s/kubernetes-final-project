@@ -42,7 +42,7 @@ kubectl get nodes -o json > /tmp/nodes-yonatan.json
         e. Use the right labels
    
 `
-kubectl expose pod messaging --port=6379 --name=messaging-service --type=ClusterIp 
+kubectl expose pod messaging --port=6379 --name=messaging-service --type=ClusterIP 
 `
 
 6. Create a service messaging-service to expose the messaging application within the cluster on port 6379.
