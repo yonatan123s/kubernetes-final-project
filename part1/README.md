@@ -231,7 +231,7 @@ spec:
     - protocol: TCP
       port: 80
       targetPort: 80
-
+EOF
 kubectl run --restart=Never --image busybox:1.28 dns -- sleep 1000
 kubectl exec -it dns -- nslookup $(kubectl get svc nginx-resolver-service -o=jsonpath='{.spec.clusterIP}') > /root/nginx-yonatan.svc
 kubectl exec -it dns -- nslookup $(kubectl get pods nginx-resolver -o=jsonpath='{.status.podIP}') > /root/nginx-yonatan.pod
