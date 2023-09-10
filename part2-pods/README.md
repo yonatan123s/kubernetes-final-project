@@ -42,7 +42,7 @@ kubectl get po --show-labels
 
 16) kubectl run nginx --image=nginx --restart=Never --dry-run -o yaml &gt; pod.yaml
 
-// add the nodeSelector like below and create the pod
+
 
 apiVersion: v1
 kind: Pod
