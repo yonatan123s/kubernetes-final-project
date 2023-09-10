@@ -164,7 +164,7 @@ metadata:
 status: {}
 ```
 
-`
+```
 apiVersion: v1
 kind: Pod
 metadata:
@@ -180,7 +180,7 @@ spec:
   - name: pv-volume
     persistentVolumeClaim:
       claimName: redis-storage-yonatan
-`
+```
 
 13. Create a new deployment called nginx-deploy, with image nginx:1.16 and 1 replica. 
 
