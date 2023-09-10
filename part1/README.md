@@ -120,7 +120,7 @@ spec:
 
 `
 kubectl apply -f analytics.yaml
-
+`
 
 11. Create a Pod called redis-storage-yourname with image: redis:alpine 
 	with a Volume of type emptyDir that lasts for the life of the Pod. specs:.
