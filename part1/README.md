@@ -99,27 +99,28 @@ kubectl run --generator=run-pod/v1 -n finance temp-bus --image redis:alpine
         c. Access modes: ReadWriteMany
         d. Host Path: /pv/data-analytics
 
-`
-kubectl apply -f - <<EOF
+yaml file:
+
+```
 apiVersion: v1
 kind: PersistentVolume
 metadata:
   name: pv-analytics
+  labels:
+    type: local
 spec:
+  storageClassName: manual
   capacity:
     storage: 100Mi
-  volumeMode: Filesystem
   accessModes:
     - ReadWriteMany
-  persistentVolumeReclaimPolicy: Recycle
-  storageClassName: slow
-  mountOptions:
-    - hard
-    - nfsvers=4.1
   hostPath:
     path: /pv/data-analytics
-EOF
+```
+
 `
+kubectl apply -f analytics.yaml
+
 
 11. Create a Pod called redis-storage-yourname with image: redis:alpine 
 	with a Volume of type emptyDir that lasts for the life of the Pod. specs:.
@@ -128,8 +129,9 @@ EOF
         c. Pod 'redis-storage-yourname' uses volumeMount with mountPath = /data/redis
 
 
+yaml file:
+
 ```
-kubectl apply -f - <<EOF
 apiVersion: v1
 kind: Pod
 metadata:
@@ -144,9 +146,11 @@ spec:
   volumes:
   - name: cache-volume
     emptyDir: {}
-EOF
 ```
 
+`
+kubectl -f apply storage.yaml
+`
 
 12. Create this pod and attached it a persistent volume called pv-1
         a. Make sure the PV mountPath is hostbase : /data
@@ -227,7 +231,7 @@ spec:
     - protocol: TCP
       port: 80
       targetPort: 80
-EOF
+
 kubectl run --restart=Never --image busybox:1.28 dns -- sleep 1000
 kubectl exec -it dns -- nslookup $(kubectl get svc nginx-resolver-service -o=jsonpath='{.spec.clusterIP}') > /root/nginx-yonatan.svc
 kubectl exec -it dns -- nslookup $(kubectl get pods nginx-resolver -o=jsonpath='{.status.podIP}') > /root/nginx-yonatan.pod
