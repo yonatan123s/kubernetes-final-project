@@ -1,5 +1,4 @@
 1) 
-// change the replicas to 5 in the yaml and create it
 
 apiVersion: apps/v1
 kind: Deployment
@@ -44,7 +43,6 @@ kubectl get po -l app=webapp -w
 
 6) kubectl create deploy webapp --image=nginx:1.17.1 --dry-run -o yaml > webapp.yaml
 
-// add the port section and create the deployment
 
 apiVersion: apps/v1
 kind: Deployment
@@ -75,8 +73,7 @@ status: {}
 
 kubectl create -f webapp.yaml
 
-// verify
-kubectl describe deploy webapp | grep Image
+
 
 7) kubectl set image deploy/webapp nginx=nginx:1.17.4
 
@@ -123,8 +120,6 @@ kubectl get pod -l app=webapp
 kubectl delete hpa webapp
 
 14) kubectl create job hello-job --image=busybox --dry-run -o yaml -- echo "Hello I am from job" > hello-job.yaml
-
-// edit the yaml file to add completions: 10
 
 apiVersion: batch/v1
 kind: Job
