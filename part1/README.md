@@ -127,7 +127,8 @@ EOF
         b. Pod 'redis-storage-yourname' uses Volume type of emptyDir
         c. Pod 'redis-storage-yourname' uses volumeMount with mountPath = /data/redis
 
-`
+
+```
 kubectl apply -f - <<EOF
 apiVersion: v1
 kind: Pod
@@ -144,7 +145,8 @@ spec:
   - name: cache-volume
     emptyDir: {}
 EOF
-`
+```
+
 
 12. Create this pod and attached it a persistent volume called pv-1
         a. Make sure the PV mountPath is hostbase : /data
