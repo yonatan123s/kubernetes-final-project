@@ -276,7 +276,6 @@ EOF
         a. Environment Variables:
             i. container 1:
             ii. name: alpha
-
             iii. Container 2:
             iv. name: beta
 
