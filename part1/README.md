@@ -49,7 +49,7 @@ kubectl expose pod messaging --port=6379 --name=messaging-service --type=Cluster
         b. Port: 6379
         c. Type: ClusterIp
         d. Use the right labels
-`
+```
 apiVersion: v1
 kind: Service
 metadata:
@@ -64,7 +64,7 @@ spec:
   type: ClusterIP
   
 kubectl apply -f messaging-service.yaml
-`
+```
 
 7. Create a deployment named hr-web-app using the image kodekloud/webapp-color with 2 replicas
         a. Name: hr-web-app
