@@ -211,7 +211,7 @@ kubectl rollout history deployment
 	Record results in /root/nginx-yourname.svc and /root/nginx-yourname.pod
 
 
-`{
+```
 kubectl run --restart=Never --image nginx nginx-resolver --labels=app=nginx-resolver
 kubectl apply -f - <<EOF
 apiVersion: v1
@@ -245,7 +245,7 @@ Address 1: 100.64.0.10 kube-dns.kube-system.svc.cluster.local
 
 Name:      100.64.159.218
 Address 1: 100.64.159.218 nginx-resolver-service.default.svc.cluster.local
-}`
+```
 
 
 
