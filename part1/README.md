@@ -165,10 +165,22 @@ status: {}
 ```
 
 `
-amswer-12.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: use-pvspec-yourname
+spec:
+  containers:
+  - name: use-pv
+    image: nginx
+    volumeMounts:
+    - name: pv-volume
+      mountPath: /data
+  volumes:
+  - name: pv-volume
+    persistentVolumeClaim:
+      claimName: redis-storage-yonatan
 `
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 13. Create a new deployment called nginx-deploy, with image nginx:1.16 and 1 replica. 
 
