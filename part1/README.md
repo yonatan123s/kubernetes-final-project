@@ -64,7 +64,6 @@ spec:
   type: ClusterIP
   
 kubectl apply -f messaging-service.yaml
-
 `
 
 7. Create a deployment named hr-web-app using the image kodekloud/webapp-color with 2 replicas
