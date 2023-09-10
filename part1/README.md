@@ -287,8 +287,8 @@ EOF
 
 
 ```
-kubectl run --generator=run-pod/v1 --dry-run --image nginx multi-pod -o yaml > pod2.yaml
-kubectl run --generator=run-pod/v1 multi-pod --image busybox --env=name=beta --dry-run --command "sleep 4800" -o yaml
+kubectl run generator=run-pod/v1 --dry-run --image=nginx multi-pod -o yaml > pod2.yaml
+kubectl run generator=run-pod/v1 multi-pod --image=busybox --env=name=beta --dry-run --command "sleep 4800" -o yaml
 
 kubectl apply -f - <<EOF
 apiVersion: v1
