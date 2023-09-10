@@ -149,7 +149,7 @@ spec:
 ```
 
 `
-kubectl -f apply storage.yaml
+kubectl apply -f storage.yaml
 `
 
 12. Create this pod and attached it a persistent volume called pv-1
