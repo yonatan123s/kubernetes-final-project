@@ -74,7 +74,7 @@ kubectl apply -f messaging-service.yaml
         c. Replicas: 2
    
 `
-kubectl run hr-web-app --image kodekloud/webapp-color --replicas=2
+kubectl run hr-web-app --image kodekloud/webapp-color -- replicas=2
 `
 
 8. Create a static pod named static-busybox on the master node that uses the busybox image and the command sleep 1000
