@@ -49,6 +49,7 @@ kubectl expose pod messaging --port=6379 --name=messaging-service --type=Cluster
         b. Port: 6379
         c. Type: ClusterIp
         d. Use the right labels
+   
 ```
 apiVersion: v1
 kind: Service
