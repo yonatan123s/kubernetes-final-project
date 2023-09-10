@@ -40,11 +40,12 @@ kubectl get nodes -o json > /tmp/nodes-yonatan.json
         c. Port: 6379
         d. Type: ClusterIp
         e. Use the right labels
+   
 `
 kubectl expose pod messaging --port=6379 --name=messaging-service --type=ClusterIp 
 `
 
-6. Create a service messaging-service to expose the messaging application within the cluster on port 6379.
+7. Create a service messaging-service to expose the messaging application within the cluster on port 6379.
         a. Service: messaging-service
         b. Port: 6379
         c. Type: ClusterIp
@@ -71,11 +72,12 @@ kubectl apply -f messaging-service.yaml
         a. Name: hr-web-app
         b. Image: kodekloud/webapp-color
         c. Replicas: 2
+   
 `
 kubectl run hr-web-app --image kodekloud/webapp-color --replicas=2
 `
 
-8. Create a static pod named static-busybox on the master node that uses the busybox image and the command sleep 1000
+9. Create a static pod named static-busybox on the master node that uses the busybox image and the command sleep 1000
         a. Name: static-busybox
         b. Image: busybox
 
@@ -192,14 +194,14 @@ spec:
         c. Task: Upgrade the version of the deployment to 1:17
         d. Task: Record the changes for the image upgrade
 
+
 `
 kubectl run nginx-deploy --image nginx:1.16 --record
 kubectl rollout history deployment
 kubectl set image deployment/nginx-deploy nginx-deploy=nginx:1.17 --record
 kubectl rollout history deployment
 `
-<<<<<<< HEAD
-<<<<<<< HEAD
+
 
 14. Create an nginx pod called nginx-resolver using image nginx, 
 
@@ -207,6 +209,7 @@ kubectl rollout history deployment
 	Test that you are able to look up the service and pod names from within the cluster. 
 	Use the image: busybox:1.28 for dns lookup. 
 	Record results in /root/nginx-yourname.svc and /root/nginx-yourname.pod
+
 `
 kubectl run --restart=Never --image nginx nginx-resolver --labels=app=nginx-resolver
 kubectl apply -f - <<EOF
@@ -242,8 +245,7 @@ Address 1: 100.64.0.10 kube-dns.kube-system.svc.cluster.local
 Name:      100.64.159.218
 Address 1: 100.64.159.218 nginx-resolver-service.default.svc.cluster.local
 `
-<<<<<<< HEAD
-<<<<<<< HEAD
+
 
 15. Create a static pod on node01 called nginx-critical with image nginx. 
 	Create this pod on node01 and make sure that it is recreated/restarted automatically in case of a failure.
