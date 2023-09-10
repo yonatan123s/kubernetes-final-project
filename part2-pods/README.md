@@ -6,7 +6,7 @@ kubectl run nginx-dev3 --image=nginx --restart=Never --labels=env=dev
 kubectl run nginx-prod1 --image=nginx --restart=Never --labels=env=prod
 kubectl run nginx-prod2 --image=nginx --restart=Never --labels=env=prod
 
-3) kubeclt get pods --show-labels
+3) kubectl get pods --show-labels
 
 4) kubectl get pods -l env=dev 
 
