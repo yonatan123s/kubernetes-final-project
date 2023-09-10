@@ -210,6 +210,7 @@ kubectl rollout history deployment
 	Use the image: busybox:1.28 for dns lookup. 
 	Record results in /root/nginx-yourname.svc and /root/nginx-yourname.pod
 
+
 `
 kubectl run --restart=Never --image nginx nginx-resolver --labels=app=nginx-resolver
 kubectl apply -f - <<EOF
@@ -245,6 +246,7 @@ Address 1: 100.64.0.10 kube-dns.kube-system.svc.cluster.local
 Name:      100.64.159.218
 Address 1: 100.64.159.218 nginx-resolver-service.default.svc.cluster.local
 `
+
 
 
 15. Create a static pod on node01 called nginx-critical with image nginx. 
